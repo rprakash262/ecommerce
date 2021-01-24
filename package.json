@@ -12,7 +12,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "homepage": "https://stark-brushlands-95921.herokuapp.com/",
+  "homepage": ".",
   "author": "ravi",
   "license": "ISC",
   "dependencies": {

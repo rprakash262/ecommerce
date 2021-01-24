@@ -3,7 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import './OneItem.css';
 
-function OneItem({ item, imagePath, loggedIn, editItem, deleteItem }) {
+function OneItem({ item, loggedIn, editItem, deleteItem }) {
   return (
     <div className="home-page-one-item">
       {loggedIn && (
@@ -17,7 +17,7 @@ function OneItem({ item, imagePath, loggedIn, editItem, deleteItem }) {
         </div>
       )}
       <div className="home-page-one-item-img">
-        <img alt="item-img" src={`${imagePath}${item.itemImage}`} />
+        <img alt="item-img" src={item.itemImage} />
       </div>
       <div className="home-page-one-item-desc">
         <h4>{item.itemName}</h4>

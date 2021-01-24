@@ -1,15 +1,15 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/storage';
 
-let config = {
-  apiKey: "AIzaSyB6xKpEVbXFVxDF4w45oRTVplfGWtnqYUs",
-  authDomain: "affiliate-marketing-a889f.firebaseapp.com",
-  projectId: "affiliate-marketing-a889f",
-  storageBucket: "affiliate-marketing-a889f.appspot.com",
-  messagingSenderId: "836424042687",
-  appId: "1:836424042687:web:40ce6849b0ee9eecf2de0a",
-  measurementId: "G-56QDEZKEP2"
-}
+const config = {
+  apiKey: "AIzaSyDKB6mjn7z3pLZTXEIb-i_PJy7tdoaWVqQ",
+  authDomain: "file-upload-b365e.firebaseapp.com",
+  projectId: "file-upload-b365e",
+  storageBucket: "file-upload-b365e.appspot.com",
+  messagingSenderId: "384613511337",
+  appId: "1:384613511337:web:1b44111cb94c3f11a979b8",
+  measurementId: "G-QRBK3PMSKJ"
+};
 
 firebase.initializeApp(config);
 

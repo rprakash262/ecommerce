@@ -13,7 +13,6 @@ const db = require('./config/keys').mongoURI;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log(db, '============>>>>>>>>>')
 // connect to db
 mongoose
   .connect(db)

@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
 
-let config = {
+const config = {
   apiKey: "AIzaSyAdv196_At_DjAaK7KlIklVbWPZbI8HC28",
   authDomain: "fileupload-5e302.firebaseapp.com",
   projectId: "fileupload-5e302",
@@ -9,7 +9,7 @@ let config = {
   messagingSenderId: "65343851735",
   appId: "1:65343851735:web:7933dec51cf61c3d4cf492",
   measurementId: "G-S92MGGRLTW"
-}
+};
 
 firebase.initializeApp(config);
 

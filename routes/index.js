@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer');
+// const multer = require('multer');
 const router = express.Router();
 
 const Category = require('../models/Category');
@@ -7,50 +7,31 @@ const SubCategory = require('../models/SubCategory');
 const Item = require('../models/Item');
 const Image = require('../models/Image');
 
-const just = {
-  "mobile phones": "mobile-phones",
-  "electronics": "electronics",
-  "appliances": "appliances",
-  "men's fashion": "mens-fashion",
-  "women's fashion": "womens-fashion",
-  "home": "home",
-  "iphone": "iphone",
-  "televisions": "televisions",
-  "kitchen": "kitchen",
-  "casual shirts": "casual-shirts",
-  "sarees": "sarees",
-  "refrigerators": "refrigerators",
-  "samsung": "samsung",
-  "one plus": "one-plus",
-  "men's blazers": "mens-blazers",
-  "palazzo": "palazzo",
-};
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './uploads');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + file.originalname);
+//   }
+// });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  }
-});
+// const fileFilter = (req, file, cb) => {
+//   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+//     cb(null, true);
+//   } else {
+//     // rejects storing a file
+//     cb(null, false);
+//   }
+// }
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    // rejects storing a file
-    cb(null, false);
-  }
-}
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter,
-});
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 1024 * 1024 * 5
+//   },
+//   fileFilter: fileFilter,
+// });
 
 router.post('/add-new-category', async (req, res) => {
   const { categoryName } = req.body;
@@ -163,28 +144,28 @@ router.post('/get-subcategories', async (req, res) => {
   }
 })
 
-router.post('/file-upload', upload.single('imageData'), async (req, res) => {
-  const { imageName } = req.body;
+// router.post('/file-upload', upload.single('imageData'), async (req, res) => {
+//   const { imageName } = req.body;
 
-  try {
-    const newImage = new Image({
-      imageName,
-      imageData: req.file.path,
-    });
+//   try {
+//     const newImage = new Image({
+//       imageName,
+//       imageData: req.file.path,
+//     });
 
-    const response = await newImage.save();
+//     const response = await newImage.save();
 
-    const image = {
-      id: response._id,
-      imageName: response.imageName,
-      imageData: response.imageData,
-    };
+//     const image = {
+//       id: response._id,
+//       imageName: response.imageName,
+//       imageData: response.imageData,
+//     };
 
-    res.status(200).json({success: true, result: image });
-  } catch (err) {
-    console.log(err);
-  }
-})
+//     res.status(200).json({success: true, result: image });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// })
 
 router.post('/add-new-item', async (req, res) => {
   const { postData } = req.body;
@@ -410,10 +391,9 @@ router.post('/edit-one-product', (req, res) => {
     }}, (err, resp) => {
       if (err) throw err;
 
-      console.log('Updated successfully!!')
+      res.json({ success: true });
     });
 
-    res.json({ success: true });
   } catch (err) {
     console.log(err);
   }

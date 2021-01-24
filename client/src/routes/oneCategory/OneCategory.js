@@ -54,7 +54,6 @@ class OneCategory extends Component {
               {val.map(item =>
                 <OneItem
                   item={item}
-                  imagePath="../"
                   loggedIn={loggedIn}
                   editItem={editItem}
                   deleteItem={deleteItem}

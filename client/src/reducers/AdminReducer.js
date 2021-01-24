@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash';
 
 import { adminActions } from '../actions';
-
 import { ACTIONS as layoutActions } from './LayoutReducer';
+import { storage } from '../firebase-config';
 
 const {
   getCategories,
@@ -225,31 +225,46 @@ const changeNewItemFormData = (type, value) => (dispatch, getState) => {
   dispatch(setNewItemFormData(clonedFormData));
 }
 
-const changeItemImage = (e, index) => async (dispatch, getState) => {
-  const imageFormObj = new FormData();
+const changeItemImage = (e) => async (dispatch, getState) => {
+  // const imageFormObj = new FormData();
 
-  imageFormObj.append('imageName', `multer-image-${Date.now()}`);
-  imageFormObj.append('imageData', e.target.files[0]);
+  const img = e.target.files[0];
 
-  dispatch(setImageFormData(imageFormObj));
+  // imageFormObj.append('imageName', `multer-image-${Date.now()}`);
+  // imageFormObj.append('imageData', e.target.files[0]);
+
+  // dispatch(setImageFormData(imageFormObj));
+  dispatch(setImageFormData(img));
 }
 
-const uploadItemImage = index => async (dispatch, getState) => {
+const uploadItemImage = () => async (dispatch, getState) => {
   dispatch(setUploadingImage(true));
   const { imageFormData } = getState().admin;
 
-  try {
-    const response = await fileUpload(imageFormData);
+  // try {
+  //   const response = await fileUpload(imageFormData);
 
-    const { result } = response;
-    const { imageData } = result;
+  //   const { result } = response;
+  //   const { imageData } = result;
 
-    dispatch(setImageUrl(imageData))
-    dispatch(setUploadingImage(false));
-  } catch (err) {
-    console.error(err);
-    dispatch(setUploadingImage(false));
-  }
+  //   dispatch(setImageUrl(imageData))
+  //   dispatch(setUploadingImage(false));
+  // } catch (err) {
+  //   console.error(err);
+  //   dispatch(setUploadingImage(false));
+  // }
+  const uploadTask = storage.ref(`images/${imageFormData.name}`).put(imageFormData);
+
+  uploadTask.on("state_changed", snapshot => {}, error => console.log(error), () => {
+    storage
+      .ref("images")
+      .child(imageFormData.name)
+      .getDownloadURL()
+      .then(url => {
+        dispatch(setImageUrl(url))
+        dispatch(setUploadingImage(false));
+      })
+  })
 }
 
 const submitNewItem = () => async (dispatch, getState) => {
@@ -339,13 +354,14 @@ const submitEditNewItem = () => async (dispatch, getState) => {
     newItemFormData,
     selectedCategoryId,
     selectedSubCategoryId,
+    imageUrl,
   } = getState().admin;
 
   const { id, itemImage } = editingItem;
 
   newItemFormData['categoryId'] = selectedCategoryId;
   newItemFormData['subCategoryId'] = selectedSubCategoryId;
-  newItemFormData['itemImage'] = itemImage;
+  newItemFormData['itemImage'] = imageUrl || itemImage;
 
   try {
     const response = await postEditItem(id, newItemFormData);

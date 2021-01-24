@@ -38,7 +38,6 @@ class OneSubcategory extends Component {
           {oneSubCategoryContent.map(item =>
             <OneItem
               item={item}
-              imagePath="../../"
               loggedIn={loggedIn}
               editItem={editItem}
               deleteItem={deleteItem}

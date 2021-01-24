@@ -119,12 +119,12 @@ function EditItemModal({
               <div className="admin-one-form-item file">
                 <input
                   type="file"
-                  onChange={e => changeItemImage(e, 0)}
+                  onChange={e => changeItemImage(e)}
                 />
                 {uploadingImage && <TimerOutlinedIcon style={{ color: "#ed143d", marginLeft: '10px' }} />}
                 {imageUrl && !uploadingImage && <DoneIcon style={{ color: 'green', marginLeft: '10px' }} /> }
                 {!imageUrl && !uploadingImage && (
-                  <button onClick={() => uploadItemImage(0)}>
+                  <button onClick={() => uploadItemImage()}>
                     <BackupIcon />
                   </button>
                 )}

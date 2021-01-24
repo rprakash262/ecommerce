@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   BrowserRouter,
-  HashRouter,
   Switch,
   Route,
 } from 'react-router-dom';
@@ -41,7 +40,7 @@ class App extends Component {
         <Banner />
         <Navbar />
         <div className="container" style={{ width: '90%', margin: 'auto', padding: '10px' }}>
-          <HashRouter>
+          <BrowserRouter>
             <Route
                 exact
                 path="/"
@@ -82,7 +81,7 @@ class App extends Component {
                   component={Admin}
               />
             </Switch>
-          </HashRouter>
+          </BrowserRouter>
         </div>
         {/* <Footer /> */}
         {editItemModal && (

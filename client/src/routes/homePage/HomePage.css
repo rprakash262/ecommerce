@@ -8,6 +8,7 @@
     border: 1px solid #80808036;
     margin-top: 50px;
     margin-bottom: 50px;
+    width: 100%;
 }
 
 .home-page-item-panel-header {
@@ -15,7 +16,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    box-sizing: border-box;
     background-color: #80808036;
+    width: 100%;
 }
 
 .home-page-item-panel-header h4 {
@@ -38,7 +41,10 @@
 .home-page-item-panel-content {
     display: flex;
     flex-direction: row;
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
+    overflow-x: scroll;
     justify-content: space-between;
 }
 

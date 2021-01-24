@@ -46,31 +46,41 @@ class App extends Component {
                 path="/"
                 component={HomePage}
             />
+            <Switch>
               <Route
                   exact
                   path="/category"  
                   component={OneCategory}
               />
+            </Switch>
+            <Switch>
               <Route
                   exact
                   path="/category/subCategory"  
                   component={OneSubcategory}
               />
+            </Switch>
+            <Switch>
               <Route
                   exact
                   path="/category/subCategory/product"  
                   component={OneProduct}
               />
+            </Switch>
+            <Switch>
               <Route
                   exact
                   path="/search"  
                   component={SearchResult}
               />
+            </Switch>
+            <Switch>
               <Route
                   exact
                   path="/admin"  
                   component={Admin}
               />
+            </Switch>
           </BrowserRouter>
         </div>
         {/* <Footer /> */}

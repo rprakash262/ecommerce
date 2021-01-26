@@ -39,46 +39,49 @@ class App extends Component {
       <div>
         <Banner />
         <Navbar />
-        <div className="container" style={{ width: '90%', margin: 'auto', padding: '10px' }}>
+        <div
+          className="container"
+          style={{ width: '90%', margin: 'auto', padding: '10px' }}
+        >
           <BrowserRouter>
             <Route
-                exact
-                path="/"
-                component={HomePage}
+              exact
+              path="/"
+              component={HomePage}
             />
             <Switch>
               <Route
-                  exact
-                  path="/category"  
-                  component={OneCategory}
+                exact
+                path="/category"  
+                component={OneCategory}
               />
             </Switch>
             <Switch>
               <Route
-                  exact
-                  path="/category/subCategory"  
-                  component={OneSubcategory}
+                exact
+                path="/category/subCategory"  
+                component={OneSubcategory}
               />
             </Switch>
             <Switch>
               <Route
-                  exact
-                  path="/category/subCategory/product"  
-                  component={OneProduct}
+                exact
+                path="/category/subCategory/product"  
+                component={OneProduct}
               />
             </Switch>
             <Switch>
               <Route
-                  exact
-                  path="/search"  
-                  component={SearchResult}
+                exact
+                path="/search"  
+                component={SearchResult}
               />
             </Switch>
             <Switch>
               <Route
-                  exact
-                  path="/admin"  
-                  component={Admin}
+                exact
+                path="/admin"  
+                component={Admin}
               />
             </Switch>
           </BrowserRouter>

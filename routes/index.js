@@ -321,10 +321,23 @@ router.post('/one-category-content', async (req, res) => {
     const response1 = await SubCategory.find({ categoryId });
     const response2 = await Item.find({ categoryId });
 
+    const items = response2.map(d => ({
+      id: d._id,
+      categoryId: d.categoryId,
+      subCategoryId: d.subCategoryId,
+      itemName: d.itemName,
+      itemDescription: d.itemDescription,
+      itemPrice: d.itemPrice,
+      itemImage: d.itemImage,
+      offer: d.offer,
+      isFeatured: d.isFeatured,
+      buyLink: d.buyLink,
+    }));
+
     const itemsObj = {};
 
     response1.forEach(d => {
-      const filteredItems = response2.filter(s => s.subCategoryId == d._id.toString());
+      const filteredItems = items.filter(s => s.subCategoryId == d._id.toString());
 
       if (filteredItems.length > 0) {
         itemsObj[d.subCategoryName] = filteredItems;

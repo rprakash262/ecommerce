@@ -373,6 +373,7 @@ const submitEditNewItem = () => async (dispatch, getState) => {
 }
 
 const deleteItem = item => async (dispatch) => {
+  console.log({item})
   const { id } = item;
 
   try {

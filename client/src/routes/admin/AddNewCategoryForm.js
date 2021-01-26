@@ -28,6 +28,7 @@ class AddNewCategory extends Component {
       changeNewCategory,
       submitNewCategory,
       filteredCategories,
+      submitttingFlag,
     } = this.props;
 
     return (
@@ -53,10 +54,10 @@ class AddNewCategory extends Component {
         </div>
         <div className="admin-one-form-item">
           <button
-            onClick={submitNewCategory}
+            onClick={submitttingFlag ? () => {} : submitNewCategory}
             className="admin-button"
           >
-            Submit
+            {submitttingFlag ? 'Wait...' : 'Submit'}
           </button>
         </div>
       </div>

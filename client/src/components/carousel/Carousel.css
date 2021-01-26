@@ -44,6 +44,7 @@
 .carousel-item-image {
     width: 50%;
     padding: 10px;
+    height: 300px;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
@@ -52,9 +53,9 @@
 }
 
 .carousel-item-image img {
-    width: 100%;
-    max-width: 380px;
-    max-height: 380px;
+    width: auto;
+    max-width: 100%;
+    max-height: 280px;
     overflow: hidden;
     height: auto;
 }
@@ -62,8 +63,8 @@
 .carousel-item-desc {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    /*justify-content: space-between;*/
+    align-items: center;
+    justify-content: center;
     width: 50%;
     padding: 10px;
     box-sizing: border-box;

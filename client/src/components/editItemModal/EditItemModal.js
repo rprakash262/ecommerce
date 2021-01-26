@@ -2,6 +2,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
 import BackupIcon from '@material-ui/icons/Backup';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { connect } from 'react-redux';
 
 import { ACTIONS } from '../../reducers/AdminReducer';
@@ -24,6 +25,7 @@ function EditItemModal({
   submitEditNewItem,
   hideEditItemModal,
   loadingEditItemModal,
+  discardImage,
 }) {
   return (
     <div>
@@ -82,19 +84,52 @@ function EditItemModal({
                   value={newItemFormData.itemDescription}
                 />
               </div>
-              <div className="admin-one-form-item file">
+              {imageUrl && (
+                <div className="admin-one-form-item file">
+                  <div className="upload-img-preview">
+                    <img src={imageUrl} />
+                    <HighlightOffIcon
+                      onClick={discardImage}
+                      className="close-preview-btn" style={{ color: '#ed143d', marginLeft: '10px', cursor: 'pointer' }}
+                    />
+                  </div>
+                </div>
+              )}
+              {!imageUrl && !uploadingImage && (
+                <div className="admin-one-form-item file">
+                  <input
+                    type="file"
+                    onChange={e => changeItemImage(e)}
+                  />
+                  <button onClick={() => uploadItemImage()}>
+                    <BackupIcon />
+                  </button>
+                </div>
+              )}
+              {!imageUrl && uploadingImage && (
+                <div className="admin-one-form-item file">
+                  <input
+                    type="file"
+                    onChange={e => changeItemImage(e)}
+                  />
+                  <TimerOutlinedIcon style={{ color: "#ed143d", marginLeft: '10px' }} />
+                </div>
+              )}
+              {/* <div className="admin-one-form-item file">
                 <input
                   type="file"
                   onChange={e => changeItemImage(e)}
                 />
                 {uploadingImage && <TimerOutlinedIcon style={{ color: "#ed143d", marginLeft: '10px' }} />}
-                {imageUrl && !uploadingImage && <DoneIcon style={{ color: 'green', marginLeft: '10px' }} /> }
+                {imageUrl && !uploadingImage && (
+                  <DeleteForeverIcon style={{ color: '#ed143d', marginLeft: '10px', cursor: 'pointer' }} />
+                )}
                 {!imageUrl && !uploadingImage && (
                   <button onClick={() => uploadItemImage()}>
                     <BackupIcon />
                   </button>
                 )}
-              </div>
+              </div> */}
               <div className="admin-one-form-item">
                 <input
                   type="text"
@@ -172,6 +207,7 @@ const mapDispatch = {
   changeItemImage: ACTIONS.changeItemImage,
   uploadItemImage: ACTIONS.uploadItemImage,
   submitEditNewItem: ACTIONS.submitEditNewItem,
+  discardImage: ACTIONS.discardImage,
 }
 
 export default connect(mapState, mapDispatch)(EditItemModal);

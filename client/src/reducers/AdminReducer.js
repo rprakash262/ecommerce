@@ -34,6 +34,7 @@ const SET_FILTERED_CATEGORIES = 'admin/SET_FILTERED_CATEGORIES';
 const SET_FILTERED_SUB_CATEGORIES = 'admin/SET_FILTERED_SUB_CATEGORIES';
 const SET_LOADING_EDIT_ITEM_MODAL = 'admin/SET_LOADING_EDIT_ITEM_MODAL';
 const SET_EDITING_ITEM = 'admin/SET_EDITING_ITEM';
+const SET_SUBMITTING_FLAG = 'admin/SET_SUBMITTING_FLAG';
 
 const changeSecurityKey = key => ({ type: SET_SECURITY_KEY, key });
 const setLoggedIn = bool => ({ type: SET_LOGGED_IN, bool });
@@ -53,6 +54,7 @@ const setFilteredCategories = cat => ({ type: SET_FILTERED_CATEGORIES, cat });
 const setFilteredSubCategories = cat => ({ type: SET_FILTERED_SUB_CATEGORIES, cat });
 const loadEditItemModal = bool => ({ type: SET_LOADING_EDIT_ITEM_MODAL, bool });
 const setEditingItem = item => ({ type: SET_EDITING_ITEM, item });
+const setSubmitting = bool => ({ type: SET_SUBMITTING_FLAG, bool });
 
 const defaultState = {
   loadingEditItemModal: false,
@@ -75,6 +77,7 @@ const defaultState = {
   filteredCategories: [],
   filteredSubCategories: [],
   editingItem: {},
+  submitttingFlag: false,
 };
 
 const init = () => async dispatch => {
@@ -137,6 +140,7 @@ const selectCategory = catId => async (dispatch, getState) => {
 }
 
 const submitNewCategory = () => async (dispatch, getState) => {
+  dispatch(setSubmitting(true));
   const { newCategory } = getState().admin;
 
   if (!newCategory) {
@@ -162,6 +166,7 @@ const submitNewCategory = () => async (dispatch, getState) => {
     const { categoryName: catName } = result;
 
     dispatch(changeNewCategory(''));
+    dispatch(setSubmitting(false));
     dispatch(layoutActions.setAlert(true, 'success', `Category "${catName}" added successfully!`));
 
     return setTimeout(() => {
@@ -169,10 +174,12 @@ const submitNewCategory = () => async (dispatch, getState) => {
     }, 4000);
   } catch (err) {
     console.error(err);
+    dispatch(setSubmitting(false));
   }
 }
 
 const submitNewSubCategory = () => async (dispatch, getState) => {
+  dispatch(setSubmitting(true));
   const { newSubCategory, selectedCategoryId } = getState().admin;
 
   if (!selectedCategoryId) {
@@ -205,6 +212,8 @@ const submitNewSubCategory = () => async (dispatch, getState) => {
     const { subCategoryName: subCatName } = result;
 
     dispatch(changeNewSubCategory(''));
+    dispatch(selectCategoryInternal(''));
+    dispatch(setSubmitting(false));
     dispatch(layoutActions.setAlert(true, 'success', `Sub-Category "${subCatName}" added successfully!`));
 
     setTimeout(() => {
@@ -212,6 +221,7 @@ const submitNewSubCategory = () => async (dispatch, getState) => {
     }, 4000);
   } catch (err) {
     console.error(err);
+    dispatch(setSubmitting(false));
   }
 }
 
@@ -268,6 +278,7 @@ const uploadItemImage = () => async (dispatch, getState) => {
 }
 
 const submitNewItem = () => async (dispatch, getState) => {
+  dispatch(setSubmitting(true));
   const {
     newItemFormData,
     imageUrl,
@@ -278,6 +289,29 @@ const submitNewItem = () => async (dispatch, getState) => {
   newItemFormData['categoryId'] = selectedCategoryId;
   newItemFormData['subCategoryId'] = selectedSubCategoryId;
   newItemFormData['itemImage'] = imageUrl;
+
+  const {
+    categoryId,
+    subCategoryId,
+    itemImage,
+    itemName,
+    itemPrice,
+    buyLink,
+  } = newItemFormData;
+
+  if (!categoryId ||
+      !subCategoryId ||
+      !itemImage ||
+      !itemName ||
+      !itemPrice ||
+      !buyLink) {
+    dispatch(layoutActions.setAlert(true, 'danger', 'All fields are required!'));
+    dispatch(setSubmitting(false));
+
+    return setTimeout(() => {
+      return dispatch(layoutActions.setAlert(false, 'danger', 'All fields are required!'));
+    }, 4000);
+  }
 
   try {
     const response = await addNewItem(newItemFormData);
@@ -294,7 +328,8 @@ const submitNewItem = () => async (dispatch, getState) => {
     dispatch(selectSubCategory(''));
     dispatch(setImageFormData({}));
     dispatch(setImageUrl(''))
-    dispatch(setNewItemFormData({ isFeatured: false }))
+    dispatch(setNewItemFormData({}))
+    dispatch(setSubmitting(false));
     dispatch(layoutActions.setAlert(true, 'success', 'Item added successfully!'));
 
     setTimeout(() => {
@@ -302,6 +337,7 @@ const submitNewItem = () => async (dispatch, getState) => {
     }, 4000);
   } catch (err) {
     console.error(err);
+    dispatch(setSubmitting(false));
   }
 }
 
@@ -331,6 +367,7 @@ const editItem = item => async (dispatch, getState) => {
     offer,
     isFeatured,
     buyLink,
+    itemImage,
   } = item;
 
   newItemFormData['itemName'] = itemName;
@@ -343,6 +380,7 @@ const editItem = item => async (dispatch, getState) => {
   dispatch(selectCategory(categoryId));
   dispatch(selectSubCategory(subCategoryId));
   dispatch(setNewItemFormData(newItemFormData));
+  dispatch(setImageUrl(itemImage))
 
   console.log({item})
   dispatch(loadEditItemModal(false));
@@ -385,6 +423,11 @@ const deleteItem = item => async (dispatch) => {
   }
 }
 
+const discardImage = () => dispatch => {
+  dispatch(setImageFormData({}));
+  dispatch(setImageUrl(''));
+}
+
 export const ACTIONS = {
   init,
   changeNewCategory,
@@ -403,6 +446,7 @@ export const ACTIONS = {
   editItem,
   submitEditNewItem,
   deleteItem,
+  discardImage,
 };
 
 function AdminReducer(state = defaultState, action) {
@@ -479,6 +523,10 @@ function AdminReducer(state = defaultState, action) {
     case SET_EDITING_ITEM:
       return Object.assign({}, state, {
         editingItem: action.item,
+      });
+    case SET_SUBMITTING_FLAG:
+      return Object.assign({}, state, {
+        submitttingFlag: action.bool,
       });
     default:
       return state;

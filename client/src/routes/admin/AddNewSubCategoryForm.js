@@ -33,28 +33,11 @@ class AddNewCategory extends Component {
       selectCategory,
       submitNewSubCategory,
       filteredSubCategories,
+      submitttingFlag,
     } = this.props;
 
     return (
       <div className="admin-add-new-sub-category">
-        {/* <div className="admin-one-form-item">
-          <select
-            defaultValue=""
-            className="admin-select"
-            onChange={e => selectCategory(e.target.value)}
-          >
-            <option value="">Select Category</option>
-            {allCategories.map(category => (
-              <option
-                key={category.id}
-                selected={selectedCategoryId === category.id}
-                value={category.id}
-              >
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-        </div> */}
         <div className="admin-one-form-item">
           <SelectDropdown
             selectedItem={allCategories.find(d => d.id === selectedCategoryId) ?
@@ -89,10 +72,10 @@ class AddNewCategory extends Component {
         </div>
         <div className="admin-one-form-item">
           <button
-            onClick={submitNewSubCategory}
+            onClick={submitttingFlag ? () => {} : submitNewSubCategory}
             className="admin-button"
           >
-            Submit
+            {submitttingFlag ? 'Wait...' : 'Submit'}
           </button>
         </div>
       </div>

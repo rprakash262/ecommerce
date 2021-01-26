@@ -51,7 +51,7 @@
 .home-page-one-item {
     position: relative;
     width: 250px;
-    height: 370px;
+    /*height: 370px;*/
     padding: 10px;
     margin: 25px;
     box-sizing: border-box;

@@ -35,6 +35,10 @@ class Carousel extends Component {
     })
   }
 
+  redirect = url => {
+    window.open(url, '_blank');
+  }
+
   render() {
     const { selectedIndex } = this.state;
     const { featuredItems } = this.props;
@@ -52,7 +56,7 @@ class Carousel extends Component {
           <div className="carousel-next-btn" onClick={this.next}>
             <ArrowForwardIosIcon style={{ color: '#fff' }} />
           </div>
-          <div className="carousal-content">
+          <div className="carousal-content" onClick={() => this.redirect(selectedItem.buyLink)}>
             <div className="carousel-item-image">
               <img alt="carousal_img" src={selectedItem && selectedItem.itemImage} />
             </div>

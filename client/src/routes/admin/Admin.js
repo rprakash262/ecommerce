@@ -42,6 +42,8 @@ class Admin extends Component {
       loggedIn,
       filteredCategories,
       filteredSubCategories,
+      submitttingFlag,
+      discardImage,
     } = this.props;
 
     return (
@@ -96,6 +98,7 @@ class Admin extends Component {
             <div className="admin-main-area">
               {selectedTab === 'addNewCategory' && (
                 <AddNewCategory
+                  submitttingFlag={submitttingFlag}
                   newCategory={newCategory}
                   changeNewCategory={changeNewCategory}
                   submitNewCategory={submitNewCategory}
@@ -104,6 +107,7 @@ class Admin extends Component {
               )}
               {selectedTab === 'addNewSubCategory' && (
                 <AddNewSubCategory
+                  submitttingFlag={submitttingFlag}
                   allCategories={allCategories}
                   changeNewSubCategory={changeNewSubCategory}
                   newSubCategory={newSubCategory}
@@ -115,6 +119,7 @@ class Admin extends Component {
               )}
               {selectedTab === 'addNewItem' && (
                 <AddNewItem
+                  submitttingFlag={submitttingFlag}
                   allCategories={allCategories}
                   allSubCategories={allSubCategories}
                   subcategoriesForCategory={subcategoriesForCategory}
@@ -129,6 +134,7 @@ class Admin extends Component {
                   submitNewItem={submitNewItem}
                   imageUrl={imageUrl}
                   uploadingImage={uploadingImage}
+                  discardImage={discardImage}
                 />
               )}
             </div>
@@ -155,6 +161,7 @@ const mapState = state => {
     loggedIn,
     filteredCategories,
     filteredSubCategories,
+    submitttingFlag,
   } = state.admin;
 
   return {
@@ -172,6 +179,7 @@ const mapState = state => {
     loggedIn,
     filteredCategories,
     filteredSubCategories,
+    submitttingFlag,
   };
 }
 
@@ -189,7 +197,8 @@ const mapDispatch = {
   uploadItemImage: ACTIONS.uploadItemImage,
   submitNewItem: ACTIONS.submitNewItem,
   changeSecurityKey: ACTIONS.changeSecurityKey,
-  submitSecurityKey: ACTIONS.submitSecurityKey
+  submitSecurityKey: ACTIONS.submitSecurityKey,
+  discardImage: ACTIONS.discardImage,
 }
 
 export default connect(mapState, mapDispatch)(Admin);

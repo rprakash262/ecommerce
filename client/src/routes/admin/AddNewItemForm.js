@@ -5,6 +5,7 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
 import SelectDropdown from '../../components/selectDropdown';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const AddNewItem = ({
   selectCategory,
@@ -21,6 +22,8 @@ const AddNewItem = ({
   submitNewItem,
   imageUrl,
   uploadingImage,
+  submitttingFlag,
+  discardImage,
 }) => (
   <div className="admin-add-new-item">
     <div className="admin-one-form-item">
@@ -65,7 +68,38 @@ const AddNewItem = ({
         value={newItemFormData.itemDescription}
       />
     </div>
-    <div className="admin-one-form-item file">
+    {imageUrl && (
+      <div className="admin-one-form-item file">
+        <div className="upload-img-preview">
+          <img src={imageUrl} />
+          <HighlightOffIcon
+            onClick={discardImage}
+            className="close-preview-btn" style={{ color: '#ed143d', marginLeft: '10px', cursor: 'pointer' }}
+          />
+        </div>
+      </div>
+    )}
+    {!imageUrl && !uploadingImage && (
+      <div className="admin-one-form-item file">
+        <input
+          type="file"
+          onChange={e => changeItemImage(e)}
+        />
+        <button onClick={() => uploadItemImage()}>
+          <BackupIcon />
+        </button>
+      </div>
+    )}
+    {!imageUrl && uploadingImage && (
+      <div className="admin-one-form-item file">
+        <input
+          type="file"
+          onChange={e => changeItemImage(e)}
+        />
+        <TimerOutlinedIcon style={{ color: "#ed143d", marginLeft: '10px' }} />
+      </div>
+    )}
+    {/* <div className="admin-one-form-item file">
       <input
         type="file"
         onChange={e => changeItemImage(e)}
@@ -77,7 +111,7 @@ const AddNewItem = ({
           <BackupIcon />
         </button>
       )}
-    </div>
+    </div> */}
     <div className="admin-one-form-item">
       <input
         type="text"
@@ -114,7 +148,9 @@ const AddNewItem = ({
       </label>
     </div>
     <div className="admin-one-form-item">
-      <button onClick={submitNewItem}>Submit</button>
+      <button onClick={submitttingFlag ? () => {} : submitNewItem}>
+        {submitttingFlag ? 'Wait...' : 'Submit'}
+      </button>
     </div>
   </div>
 )

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import SelectDropdown from '../../components/selectDropdown';
+
 class AddNewCategory extends Component {
   constructor() {
     super();
@@ -35,7 +37,7 @@ class AddNewCategory extends Component {
 
     return (
       <div className="admin-add-new-sub-category">
-        <div className="admin-one-form-item">
+        {/* <div className="admin-one-form-item">
           <select
             defaultValue=""
             className="admin-select"
@@ -52,6 +54,19 @@ class AddNewCategory extends Component {
               </option>
             ))}
           </select>
+        </div> */}
+        <div className="admin-one-form-item">
+          <SelectDropdown
+            selectedItem={allCategories.find(d => d.id === selectedCategoryId) ?
+              allCategories.find(d => d.id === selectedCategoryId).categoryName :
+              'Select Category'
+            }
+            selectItem={id => selectCategory(id)}
+            dropdownList={allCategories.map(d => ({
+              id: d.id,
+              value:d.categoryName,
+            }))}
+          />
         </div>
         <div style={{ position: 'relative', width: '100%' }}>
           <div className="admin-one-form-item">

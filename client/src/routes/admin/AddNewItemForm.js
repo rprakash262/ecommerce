@@ -4,6 +4,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
+import SelectDropdown from '../../components/selectDropdown';
 
 const AddNewItem = ({
   selectCategory,
@@ -23,38 +24,30 @@ const AddNewItem = ({
 }) => (
   <div className="admin-add-new-item">
     <div className="admin-one-form-item">
-      <select
-        defaultValue=""
-        onChange={e => selectCategory(e.target.value)}
-      >
-        <option value="">Select Category</option>
-        {allCategories.map(category => (
-          <option
-            key={category.id}
-            selected={selectedCategoryId === category.id}
-            value={category.id}
-          >
-            {category.categoryName}
-          </option>
-        ))}
-      </select>
+      <SelectDropdown
+        selectedItem={allCategories.find(d => d.id === selectedCategoryId) ?
+          allCategories.find(d => d.id === selectedCategoryId).categoryName :
+          'Select Category'
+        }
+        selectItem={id => selectCategory(id)}
+        dropdownList={allCategories.map(d => ({
+          id: d.id,
+          value:d.categoryName,
+        }))}
+      />
     </div>
     <div className="admin-one-form-item">
-      <select
-        defaultValue=""
-        onChange={e => selectSubCategory(e.target.value)}
-      >
-        <option value="">Select Sub-Category</option>
-        {subcategoriesForCategory.map(subCategory => (
-          <option
-            key={subCategory.id}
-            selected={selectedSubCategoryId === subCategory.id}
-            value={subCategory.id}
-          >
-            {subCategory.subCategoryName}
-          </option>
-        ))}
-      </select>
+      <SelectDropdown
+        selectedItem={subcategoriesForCategory.find(d => d.id === selectedSubCategoryId) ?
+          subcategoriesForCategory.find(d => d.id === selectedSubCategoryId).subCategoryName :
+           'Select Sub-Category'
+        }
+        selectItem={id => selectSubCategory(id)}
+        dropdownList={subcategoriesForCategory.map(d => ({
+          id: d.id,
+          value:d.subCategoryName,
+        }))}
+      />
     </div>
     <div className="admin-one-form-item">
       <input

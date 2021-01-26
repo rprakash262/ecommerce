@@ -40,40 +40,6 @@ function EditItemModal({
           </div>
           <div className="edit-item-modal-content">
             <div className="admin-add-new-item">
-              {/* <div className="admin-one-form-item">
-                <select
-                  defaultValue=""
-                  onChange={e => selectCategory(e.target.value)}
-                >
-                  <option value="">Select Category</option>
-                  {allCategories.map(category => (
-                    <option
-                      key={category.id}
-                      selected={selectedCategoryId === category.id}
-                      value={category.id}
-                    >
-                      {category.categoryName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="admin-one-form-item">
-                <select
-                  defaultValue=""
-                  onChange={e => selectSubCategory(e.target.value)}
-                >
-                  <option value="">Select Sub-Category</option>
-                  {subcategoriesForCategory.map(subCategory => (
-                    <option
-                      key={subCategory.id}
-                      selected={selectedSubCategoryId === subCategory.id}
-                      value={subCategory.id}
-                    >
-                      {subCategory.subCategoryName}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
               <div className="admin-one-form-item">
                 <SelectDropdown
                   selectedItem={allCategories.find(d => d.id === selectedCategoryId) ?
